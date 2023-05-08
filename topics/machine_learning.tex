@@ -1,0 +1,48 @@
+\section{Machine Learning}
+\subsection{Types of Learning}
+\emph{Supervised Learning:} - learn a model from labeled training data to make predictions about unseen or future data.
+\emph{Unsupervised Learning:} - learn a model from unlabeled data to discover hidden patterns or groupings in data.
+\emph{Reinforcement Learning:} - develop a system (agent) that improves its performance based on interactions with the environment. maximize reward fucntion.
+\subsection{k-Nearest Neighbors}
+Given a set of labeled data, classify a new data point based on the majority vote of its k nearest neighbors according to some distance metric such as Euclidean, Manhattan, Minkowski, Hamming, Cosine Similarity. The algorithm for kNN is as follows:
+\begin{enumerate}
+    \item Compute distance between query point and all examples.
+    \item Sort by distance.
+    \item Select the k closest examples.
+    \item Classify the query point by majority vote.
+\end{enumerate}
+\subsection{Regression}
+Relationship between input and output variables is modeled by fitting a function to the data. Given a set of $n$ labeled pairs $(x_i,y_i)$, find a function $f(x)=\beta_0+\beta_1 x$ that approximates $y$ for a given $x$. We can use the least squares method to find the best fit line using the formula \[\beta_1=\frac{\sum^n_{i=1}(x_i-\bar{x})(y_i-\bar{y})}{\sum^n_{i=1}(x_i-\bar{x})^2}, \beta_0=\bar{y}-\beta_1\bar{x}\].
+\subsection{Bayesian Learning}
+\subsubsection{Bayes Rule:} $\mathbb{P}(Y=k|X=x) \propto \mathbb{P}(X=x|Y=k)\mathbb{P}(Y=k)$ Classification is like calculating posterior probability, so we can calculate using Bayre's Rule.
+\subsubsection{Naive Bayes:} Assume features are independent given class to reduce dimensionality. \(\mathbb{P}(Y=k|\mathbf{X}=\mathbf{x})\propto \prod^{p}_{j=1}\mathbb{P}(X_j=x_j|Y=k)\mathbb{P}(Y=k)\)
+If the features are continuous, we can use a Gaussian distribution.
+\subsubsection{Laplace Smoothing:} estimate conditional by adding a constant factor that is greater than 0 to each count. \(\mathbb{P}(X_j=c|y)=\frac{n_{c}+\alpha}{n+v}\) where $n_c$ is the number of times $X_j=c$ and $n$ is the number of training examples and $v$ is the number of levels in feature $X_j$.
+\subsubsection{Maximum Likelihood Estimation} \textbf{MLE:} estimate parameters of a model by maximizing the likelihood function $\mathcal{L}(\theta|X)$ which is the probability of the observed data $X$ given the model parameters $\theta$. The formula is: \[\hat{\theta}_{MLE}=\underset{\theta}{\text{argmax}}\mathcal{L}(\theta|X)=\underset{\theta}{\text{argmax}}\prod_{i=1}^{n}f(x_i|\theta)\] where $f(x_i|\theta)$ is the probability density function of the $i$th observation.
+\subsubsection{Continuous Features:} When given a continuous feature you can use a Gaussian distribution to estimate the probability density function. \[f(x|\mu,\sigma^2)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\] where $\mu$ is the mean and $\sigma^2$ is the variance. We can use the data we have to estimate the parameters $\mu$ and $\sigma^2$ using the following formulas: \[\hat{\mu}=\frac{1}{n}\sum_{i=1}^{n}x_i\] \[\hat{\sigma}^2=\frac{1}{n}\sum_{i=1}^{n}(x_i-\hat{\mu})^2\]
+\subsubsection{Bayesian Belief Networks:} Directed acyclic graph that represents a set of conditional independence assumptions. For example:
+\begin{minipage}[b]{0.2\linewidth}
+    \begin{tikzpicture}[scale=.45,transform shape,->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+        thick,main node/.style={myblue!80,circle,draw,font=\sffamily\Large\bfseries}]
+        \node[main node] (A) at (0,1) {A};
+        \node[main node] (X) [below right of=A] {X};
+        \node[main node] (B) [above right of=X] {B};
+        \node[main node] (C) [below left of=X] {C};
+        \node[main node] (D) [below right of=X] {D};
+        
+        \path[every node/.style={myblue!80,font=\sffamily\small}]
+        (A) edge [color=myblue!80] node [above] {} (X)
+        (B) edge [color=myblue!80] node [above] {} (X)
+        (X) edge [color=myblue!80] node [above left] {} (C)
+        edge [color=myblue!80] node [above right] {} (D);
+    \end{tikzpicture}
+\end{minipage}%
+\begin{minipage}[b]{0.76\linewidth}
+   \begin{enumerate}
+    % \item $\mathbb{P}(A,B,C,D,X)=\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C|X)\mathbb{P}(D|X)\mathbb{P}(X|A,B)$
+    \item $\mathbb{P}(CD|X)=\mathbb{P}(C|X)\mathbb{P}(D|X)$
+    \item $\mathbb{P}(X|AB)=\mathbb{P}(X|AB)$
+    \item $\mathbb{P}(\cdot)=\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(X|AB)\mathbb{P}(C|X)\mathbb{P}(D|X)$
+    \item $\mathbb{P}(X|\cdot)\propto\mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C|X)\mathbb{P}(D|X)$
+   \end{enumerate}
+\end{minipage}

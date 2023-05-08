@@ -1,0 +1,42 @@
+\section{Fuzzy Logic and Fuzzy Sets}
+Similar to probability theory, fuzzy logic is a mathematical framework for representing and reasoning with uncertainty. Fuzzy logic is a superset of conventional (Boolean) logic that has been extended to handle the concept of partial truth -- truth values between ``completely true'' and ``completely false''. Fuzzy logic is used in many applications such as control systems, expert systems, and data mining.
+\subsection{Fuzzy Terms:} Given a universe of discourse $U$, a fuzzy set $A\in U$ is defined by a membership function $\mu_A:U\rightarrow[0,1]$.
+% \begin{enumerate}
+%     \item  $\mu_A(x)$ is the degree of membership of $x\in A$.
+%     \item \emph{support} of $A$ set of $x\in U$ s.t. \(\mu_A(x)>0\).
+%     \item \emph{core} of $A$ set of $x\in U$ s.t. $\mu_A(x)=1$.
+%     \item \emph{height} of $A$ is $\max_{x\in U}\mu_A(x)$.
+% \end{enumerate}
+Additionally, we define the empty set $\emptyset$ as the fuzzy set with membership function $\mu_{\emptyset}(x)=0$ for all $x\in U$ and the universal set $U$ as the fuzzy set with membership function $\mu_U(x)=1$ for all $x\in U$.
+\subsection{Fuzzy Set Operations:}
+\textbf{Main Set Operations:}
+\begin{enumerate}
+        \item \textbf{Complement:} $\mu_{\bar{A}}(x)=1-\mu_A(x)$
+        \item \textbf{Union:} $\mu_{A\cup B}(x)=\max(\mu_A(x),\mu_B(x))$
+        \item \textbf{Intersection:} $\mu_{A\cap B}(x)=\min(\mu_A(x),\mu_B(x))$
+        \item \textbf{Difference:} $\mu_{A\setminus B}(x)=\max(\mu_A(x),1-\mu_B(x))$
+\end{enumerate}
+The fuzzy set operations for interaction, union, and complement can be defined in terms of the norms and conorms of the membership functions. A \emph{T-norm}, used for fuzzy unions, is binary function \(T:[0,1]\times[0,1]\rightarrow[0,1]\) that satisfies the following conditions:
+\begin{enumerate}
+    \item $T(x,y)=T(y,x)$ (commutative)
+    \item $T(x,1)=x$ (identity)
+    \item $x\leq y\Rightarrow T(x,z)\leq T(y,z)$ (monotonic)
+    \item $T(x,T(y,z))=T(T(x,y),z)$ (associative)
+\end{enumerate}
+\emph{T-conorm}, used for fuzzy intersections, is binary function \(S:[0,1]\times[0,1]\rightarrow[0,1]\) that satisfies the following conditions:
+\begin{enumerate}
+    \item $S(x,y)=S(y,x)$ (commutative)
+    \item $S(x,0)=x$ (identity)
+    \item $x\leq y\Rightarrow S(x,z)\leq S(y,z)$ (monotonic)
+    \item $S(x,S(y,z))=S(S(x,y),z)$ (associative)
+\end{enumerate}
+\subsection{interpretable Rule Systems:} A rule system is a set of rules of the form \emph{if-then} where the \emph{if} part is called the \emph{antecedent} and the \emph{then} part is called the \emph{consequent}. To design a set of rules for a fuzzy system, we first need to \emph{fuzzify} the inputs using a set of membership functions. Then we apply the rules to the fuzzy inputs to obtain fuzzy outputs. Finally, we \emph{defuzzify} the fuzzy outputs to obtain crisp outputs. The defuzzification process can be done using the \emph{centroid method} or the \emph{max membership method}.
+\subsection{Fuzzy Inference Systems:} A fuzzy inference system (FIS) is a system that uses fuzzy rules and fuzzy logic to map inputs to outputs. FIS can be used for modeling complex nonlinear systems. FIS are composed of four main components: a rule base, a database, a fuzzification interface, and a defuzzification interface.
+\subsubsection{Firing Level of a Rule:} The firing level of a rule is the degree to which the antecedent of the rule is satisfied. The firing level of a rule is computed by taking the minimum of the membership functions of the antecedent. \[\text{Firing Level}=\min(\mu_{A_1}(x_1),\mu_{A_2}(x_2),\dots,\mu_{A_n}(x_n))\]
+\subsubsection{Chopping:} During inference we can use the firing level of a rule to determine the degree to which the consequent is satisfied. The degree to which the consequent is satisfied is computed by taking the minimum of the firing level and the membership function of the consequent. \[\text{Degree of Satisfaction}=\min(\text{Firing Level},\mu_{B}(y))\] We can then ``chop'' the output membership function at the degree of satisfaction which essentially redistributes the membership function to the degree of satisfaction. \[\mu_{B'}(y)=\begin{cases}
+    \mu_B(y) & \text{if } \mu_B(y)\leq \text{Firing Level}\\
+    \text{Firing Level} & \text{if } \mu_B(y)>\text{Firing Level}\end{cases}\]
+\subsubsection{Wang-Mendel Algorithm:} The Wang-Mendel algorithm is a method for generating fuzzy rules from numerical data. The algorithm is as follows: given a set of \(p\) features \(x_1,x_2,\dots,x_p\) and a target variable \(y\), we first partition the input space into a set of fuzzy sets \(A_1,A_2,\dots,A_p\) and the output space into a set of fuzzy sets \(B_1,B_2,\dots,B_q\). Then we compute the membership functions \(\mu_{A_i}(x_i)\) and \(\mu_{B_j}(y)\) for each fuzzy set. Finally, we compute the fuzzy rules using the following formula: \[\mu_{A_i\rightarrow B_j}(x_i,y)=\min(\mu_{A_i}(x_i),\mu_{B_j}(y))\] breaking ties by selecting the rule with the highest confidence level \(\mu_{A_i}(x_i)\). Collect all \emph{if-then} rules with the same antecedent and combine them into a single rule with the consequent being the union of the consequents of the individual rules.
+\textbf{Algorithm:} For the exam, determine fuzzy sets where each feature has the highest membership and use these to create a set of \emph{if-then} rules.
+\subsubsection{Fuzzy C-Means Clustering (Soft K-Means):} Fuzzy C-Means clustering is a method for clustering data points into \(c\) clusters. Given a set of \(n\) data points \(\mathbf{X}=\{x_1,x_2,\dots,x_n\}\) returns a list of \(c\) cluster centers \(\mathbf{V}=\{v_1,v_2,\dots,v_c\}\) and a partition matrix \(\mathbf{W}=w_{ij}\in [0,1],i=1,2,\dots,n,j=1,2,\dots,c\) where \(w_{ij}\) represents the degree of membership of \(x_i\) in cluster \(c_j\). The algorithm minimizes the objective function \[J_m=\sum_{i=1}^{n}\sum_{j=1}^{c}w_{ij}^m||x_i-v_j||^2\] where \(m\in{[1,\infty)}\) is a weighting exponent and \[w_{ij}=\frac{1}{\sum_{k=1}^c\left(\frac{\Vert x_i - c_j \Vert } {\Vert x_i - c_k \Vert} \right)^{2/(m-1)}}\]
+\textbf{Algorithm:} Practically speaking, for the exam we will likely locate the centroid by visual inspection.

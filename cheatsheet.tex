@@ -1,0 +1,54 @@
+\documentclass[10pt,landscape]{article}
+\usepackage[utf8]{inputenc}
+% \usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[LY1,T1]{fontenc}
+%\usepackage{frutigernext}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard,trees}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=7mm,bottom=7mm,left=7mm,right=7mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+\usepackage{pdfpages}
+\usepackage{xcolor}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+% \usetikzlibrary{trees,shapes,arrows} 
+\usepackage{algpseudocodex}
+\usepackage{algorithm2e}
+\usepackage{algorithmicx}
+\usepackage{scalerel}
+
+% \usepa
+% \usepackage{fontspec}
+
+\let\bar\overline
+
+\include{style/def}
+
+\begin{document}
+%\footnotesize
+\small
+\begin{multicols*}{3}
+% \input{inhalt/aussagen}
+\input{topics/machine_learning.tex}
+\input{topics/decision_trees.tex}
+\input{topics/fuzzy.tex}
+\input{topics/neural_networks.tex}
+\input{topics/reinforcement_learning.tex}
+\input{topics/unsupervised_learning.tex}
+% \input{inhalt/mengen}
+% \input{inhalt/relationen}
+% \input{inhalt/abbildungen}
+% \input{inhalt/beweise} 
+% \input{inhalt/graphen}
+%\input{inhalt/graphalgo}
+%\input{inhalt/bool}
+%\input{inhalt/formeln}
+\end{multicols*}
+\end{document}

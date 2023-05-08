@@ -1,0 +1,22 @@
+\section{Unsupervised Learning}
+In the \emph{unsupervised learning} setting, the agent is given a set of unlabeled data and the goal is to discover hidden patterns or groupings in the data. Common unsupervised tasks include \emph{principal component analysis}, \emph{clustering}, and \emph{density estimation}.
+% \emph\textbf{{Principal Component Analysis}}
+% Uses properties of the covariance matrix to find the direction of maximum variance in the data. The first principal component is the direction of maximum variance. The second principal component is the direction of maximum variance orthogonal to the first principal component. The $k$th principal component is the direction of maximum variance orthogonal to the first $k-1$ principal components.
+\emph\textbf{{Clustering}}
+Broad claass of methods which aim to classify or discover sub-groups in the data.
+\emph{\textbf{hierarchical clustering:}} no assumption about the number of clusters, usually represented as a dendrogram which is a tree-like diagram that records the sequences of merges or splits for different \(k\) values.
+
+\subsection{K-Means Clustering}
+A partion of the data: \(C_1,C_2,\dots,C_k\) must satisfy the constraints that \(C_i\cap C_j=\emptyset\) and \(\bigcup_{i=1}^{k}C_i=\mathbf{X}\). The goal is to minimize variation within clusters. One approach is to minimize the within-cluster sum of squares (WCSS) which is given by \(\sum_{i=1}^{k}\sum_{x\in C_i}||x-\mu_i||^2\) where \(\mu_i\) is the mean of cluster \(C_i\). Another is to minimize the Euclidean distance between each point and its cluster center which is given by \(\mathtt{WCV}(C_k)=\frac{1}{\vert C_k \vert}\sum_{i,i'\in C_k}\sum_{j=1}^P(x_{ij}-x_{i'j})^2\)  where \(C_k\) is the \(k\)th cluster and \(P\) is the number of features. We then seek to minimize:
+\[
+     \underset{C_1,\dots,C_k}{\mathtt{minimize}}\left\{\sum_{k=1}^{K}\frac{1}{|C_k|}\sum_{i,i'\in C_k}\sum_{j=1}^P(x_{ij}-x_{i'j})^2\right\}
+\]
+\subsubsection{K-Means Algorithm}
+\begin{enumerate}
+    \item Randomly assign a number, from 1 to $k$, to each of the data points. These numbers represent the cluster assignments for the observations.
+    \item Iterate until the cluster assignments stop changing:
+    \begin{enumerate}
+        \item For each of the $k$ clusters, compute the cluster centroid. The $k$th cluster centroid is the vector of the $p$ feature means for the observations in the $k$th cluster.
+        \item Assign each observation to the cluster whose centroid is closest (where closest is defined using Euclidean distance).
+    \end{enumerate}
+\end{enumerate}
